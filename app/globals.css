@@ -1,1 +1,7 @@
 @import "tailwindcss";
+
+@layer base {
+  a {
+    @apply text-lime-500;
+  }
+}
