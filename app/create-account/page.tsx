@@ -1,3 +1,5 @@
+
+import InputForm from "@/components/InputForm"
 import { ChatBubbleLeftRightIcon } from "@heroicons/react/24/outline"
 import Link from "next/link"
 
@@ -8,15 +10,15 @@ function CreateAccount() {
                 <h1 className="text-3xl font-bold">Hello!</h1>
                 <span className="text-xl">Fill in the form below to join!</span>
             </div>
-            <form className="flex flex-col gap-4">
-                <div className="flex flex-col gap-2">
-                    <input placeholder="Username"
-                        type="text"
-                        required
-                        className="bg-transparent border w-full focus:outline-none ring-1 focus:ring-2 ring-neutral-200 focus:ring-lime-500 rounded-md border-none placeholder:text-neutral-500 p-2 "
-                    />
-                    <span className="text-red-500">Input Error</span>
-                </div>
+            <form className="flex flex-col gap-2">
+                <InputForm
+                    type="text" placeholder="Username" required={true} errors={[]} />
+                <InputForm
+                    type="email" placeholder="Email" required={true} errors={[]} />
+                <InputForm
+                    type="password" placeholder="Password" required={true} errors={[]} />
+                <InputForm
+                    type="password" placeholder="Password Confirm" required={true} errors={[]} />
                 <button className="primary-btn p-1.5">Create Account</button>
             </form>
             <div className="w-full h-px bg-neutral-500" />
