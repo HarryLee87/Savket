@@ -12,14 +12,14 @@ function CreateAccount() {
             </div>
             <form className="flex flex-col gap-2">
                 <InputForm
-                    type="text" placeholder="Username" required={true} errors={[]} />
+                    name="username" type="text" placeholder="Username" required={true} errors={[]} />
                 <InputForm
-                    type="email" placeholder="Email" required={true} errors={[]} />
+                    name="email" type="email" placeholder="Email" required={true} errors={[]} />
                 <InputForm
-                    type="password" placeholder="Password" required={true} errors={[]} />
+                    name="password" type="password" placeholder="Password" required={true} errors={[]} />
                 <InputForm
-                    type="password" placeholder="Password Confirm" required={true} errors={[]} />
-                <FormBtn text="Create Account" loading={false} />
+                    name="password_confirm" type="password" placeholder="Password Confirm" required={true} errors={[]} />
+                <FormBtn text="Create Account" />
             </form>
             <SMSLogin />
         </div>

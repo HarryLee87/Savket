@@ -1,7 +1,6 @@
 
 import FormBtn from "@/components/FormBtn"
 import InputForm from "@/components/InputForm"
-import SMSLogin from "@/components/SMSLogin"
 
 function SMS() {
     return (
@@ -12,10 +11,10 @@ function SMS() {
             </div>
             <form className="flex flex-col gap-2">
                 <InputForm
-                    type="number" placeholder="Phone number" required={true} errors={[]} />
+                    name="phone" type="number" placeholder="Phone number" required={true} errors={[]} />
                 <InputForm
-                    type="number" placeholder="Verification code" required={true} errors={[]} />
-                <FormBtn text="Send" loading={false} />
+                    name="verfication_code" type="number" placeholder="Verification code" required={true} errors={[]} />
+                <FormBtn text="Send" />
             </form>
         </div>
     )
