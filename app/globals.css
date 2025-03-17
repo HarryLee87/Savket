@@ -5,3 +5,9 @@
     @apply text-lime-500;
   }
 }
+
+@layer components {
+  .primary-btn {
+    @apply w-full bg-lime-500 text-white font-medium rounded-md text-center hover:bg-lime-400 transition-colors;
+  }
+}
