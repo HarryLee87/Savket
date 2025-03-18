@@ -21,9 +21,9 @@ function CreateAccount() {
                 <InputForm
                     name="email" type="email" placeholder="Email" required={true} errors={state?.fieldErrors.email} />
                 <InputForm
-                    name="password" type="password" placeholder="Password" required={true} errors={state?.fieldErrors.password} />
+                    name="password" type="password" placeholder="Password" required={true} errors={state?.fieldErrors.password} pwIcon={true} />
                 <InputForm
-                    name="password_confirm" type="password" placeholder="Password Confirm" required={true} errors={state?.fieldErrors.password_confirm} />
+                    name="password_confirm" type="password" placeholder="Password Confirm" required={true} errors={state?.fieldErrors.password_confirm} pwIcon={true} />
                 <FormBtn text="Create Account" />
             </form>
             <SMSLogin />
