@@ -30,8 +30,8 @@ function InputForm({
             <div className="input-container">
                 <div className="input-icon">
                     {pwIcon ?
-                        (visible ? <EyeSlashIcon className="pw-icon" onClick={handleVisible} />
-                            : <EyeIcon className="pw-icon" onClick={handleVisible} />) : null}
+                        (visible ? <EyeIcon className="pw-icon" onClick={handleVisible} />
+                            : <EyeSlashIcon className="pw-icon" onClick={handleVisible} />) : null}
                 </div>
                 <input
                     name={name}
