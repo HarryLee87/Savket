@@ -17,13 +17,13 @@ function CreateAccount() {
             </div>
             <form action={dispatch} className="flex flex-col gap-2">
                 <InputForm
-                    name="username" type="text" placeholder="Username" required={true} />
+                    name="username" type="text" placeholder="Username" required={true} errors={state?.fieldErrors.username} />
                 <InputForm
-                    name="email" type="email" placeholder="Email" required={true} />
+                    name="email" type="email" placeholder="Email" required={true} errors={state?.fieldErrors.email} />
                 <InputForm
-                    name="password" type="password" placeholder="Password" required={true} />
+                    name="password" type="password" placeholder="Password" required={true} errors={state?.fieldErrors.password} />
                 <InputForm
-                    name="password_confirm" type="password" placeholder="Password Confirm" required={true} />
+                    name="password_confirm" type="password" placeholder="Password Confirm" required={true} errors={state?.fieldErrors.password_confirm} />
                 <FormBtn text="Create Account" />
             </form>
             <SMSLogin />
