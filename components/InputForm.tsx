@@ -2,7 +2,7 @@ interface InputFormProps {
     type: string,
     placeholder: string,
     required: boolean,
-    errors: string[]
+    errors?: string[]
     name: string
 }
 
@@ -10,7 +10,7 @@ function InputForm({
     type,
     placeholder,
     required,
-    errors,
+    errors = [],
     name }: InputFormProps) {
     return (
         <div className="flex flex-col gap-2">
