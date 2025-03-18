@@ -1,4 +1,3 @@
-
 "use client"
 
 import FormBtn from "@/components/FormBtn"
@@ -9,6 +8,7 @@ import { createAccount } from "./actions"
 
 function CreateAccount() {
     const [state, dispatch] = useActionState(createAccount, null)
+
     return (
         <div className="flex flex-col gap-10 p-4 mx-auto max-w-sm *:font-medium">
             <div className="flex flex-col gap-2">
