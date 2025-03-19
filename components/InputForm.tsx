@@ -1,3 +1,5 @@
+"use client"
+
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline"
 import { InputHTMLAttributes, useState } from "react"
 
@@ -22,6 +24,8 @@ function InputForm({
         setVisible((prev) => !prev)
     }
 
+    const additionalClasses = type === "number" ? "no-arrows" : "";
+
     return (
         <div className="flex flex-col gap-2">
             <div className="input-container">
@@ -33,7 +37,7 @@ function InputForm({
                 <input
                     name={name}
                     type={visible ? "text" : type}
-                    className="input-field"
+                    className={`input-field ${additionalClasses}`}
                     {...rest}
                 />
             </div>

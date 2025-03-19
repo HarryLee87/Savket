@@ -26,4 +26,15 @@
   .pw-icon {
     @apply text-neutral-500;
   }
+
+  .no-arrows {
+    /* Remove spinner arrows in Chrome, Safari, Edge, Opera */
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    /* Remove spinner arrows in Firefox */
+    -moz-appearance: textfield;
+  }
 }

@@ -22,16 +22,14 @@ function Login() {
                     type="email"
                     placeholder="Email"
                     required={true}
-                    errors={[]}
-                    minLength={USERNAME_MIN_LENGTH}
-                    maxLength={USERNAME_MAX_LENGTH}
+                    errors={state?.fieldErrors.email}
                 />
                 <InputForm
                     name="password"
                     type="password"
                     placeholder="Password"
                     required={true}
-                    errors={state?.errors ?? []}
+                    errors={state?.fieldErrors.password}
                     minLength={PASSWORD_MIN_LENGTH}
                     maxLength={PASSWORD_MAX_LENGTH}
                     pwIcon={true}

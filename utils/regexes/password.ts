@@ -1,5 +1,5 @@
-const passwordRegex = new RegExp(
+const PASSWORD_REGEX = new RegExp(
   /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).+$/
 );
 
-export { passwordRegex };
+export { PASSWORD_REGEX };

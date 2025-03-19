@@ -1,6 +1,14 @@
 "use server";
 
-import { passwordRegex } from "@/utils/regexes/password";
+import {
+  PASSWORD_MAX_LENGTH,
+  PASSWORD_MIN_LENGTH,
+  USERNAME_MAX_ERROR_MESSAGE,
+  USERNAME_MAX_LENGTH,
+  USERNAME_MIN_ERROR_MESSAGE,
+  USERNAME_MIN_LENGTH,
+} from "@/utils/constans";
+import { PASSWORD_REGEX } from "@/utils/regexes/password";
 import { z } from "zod";
 
 const checkUsername = (username: string) => {
@@ -22,18 +30,18 @@ const formSchema = z
         invalid_type_error: "Username cannot be numbers!",
         required_error: "Username is required!",
       })
-      .min(5, "Username is too short!")
-      .max(18, "Username is too long!")
+      .min(USERNAME_MIN_LENGTH, USERNAME_MIN_ERROR_MESSAGE)
+      .max(USERNAME_MAX_LENGTH, USERNAME_MAX_ERROR_MESSAGE)
       .toLowerCase()
       .trim()
       .refine(checkUsername, "silly is not allowed"),
     email: z.string().email().trim().toLowerCase(),
     password: z
       .string()
-      .min(6)
-      .max(20)
+      .min(PASSWORD_MIN_LENGTH)
+      .max(PASSWORD_MAX_LENGTH)
       .regex(
-        passwordRegex,
+        PASSWORD_REGEX,
         "A password must contain at least one uppercase letter, one lowercase letter, one number, and one special character"
       ),
     password_confirm: z.string().min(6).max(20),
