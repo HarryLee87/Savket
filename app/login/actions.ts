@@ -1,9 +1,11 @@
 "use server";
 
 const handleForm = async (prevState: any, formData: FormData) => {
-  console.log("running in the server!!");
-  console.log(prevState);
-  console.log(formData.get("email"), formData.get("password"));
+  const data = {
+    username: formData.get("username"),
+    password: formData.get("password"),
+  };
+
   return {
     errors: ["wrong password", "passowrd is too short"],
   };
