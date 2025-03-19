@@ -2,17 +2,17 @@ import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline"
 import { InputHTMLAttributes, useState } from "react"
 
 interface InputFormProps {
-    type: string,
     errors?: string[]
     name: string
     pwIcon?: boolean
+    type: string,
 }
 
 function InputForm({
-    type,
     errors = [],
     name,
     pwIcon,
+    type,
     ...rest
 }: InputFormProps & InputHTMLAttributes<HTMLInputElement>,
 ) {
