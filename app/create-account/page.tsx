@@ -1,10 +1,10 @@
 "use client"
 
-import FormBtn from "@/components/FormBtn"
 import InputForm from "@/components/InputForm"
 import SMSLogin from "@/components/SMSLogin"
 import { useActionState } from "react"
 import { createAccount } from "./actions"
+import Button from "@/components/Button"
 
 function CreateAccount() {
     const [state, dispatch] = useActionState(createAccount, null)
@@ -24,7 +24,7 @@ function CreateAccount() {
                     name="password" type="password" placeholder="Password" required={true} errors={state?.fieldErrors.password} pwIcon={true} />
                 <InputForm
                     name="password_confirm" type="password" placeholder="Password Confirm" required={true} errors={state?.fieldErrors.password_confirm} pwIcon={true} />
-                <FormBtn text="Create Account" />
+                <Button text="Create Account" />
             </form>
             <SMSLogin />
         </div>

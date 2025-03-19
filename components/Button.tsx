@@ -2,10 +2,10 @@
 
 import { useFormStatus } from "react-dom"
 
-interface FormBtnProps {
+interface ButtonProps {
     text: string
 }
-function FormBtn({ text }: FormBtnProps) {
+function Button({ text }: ButtonProps) {
     const { pending } = useFormStatus()
     return (
         <button className="primary-btn p-1.5 disabled:bg-neutral-400 disabled:text-neutral-300 disabled:cursor-not-allowed" disabled={pending}>
@@ -14,4 +14,4 @@ function FormBtn({ text }: FormBtnProps) {
     )
 }
 
-export default FormBtn
+export default Button

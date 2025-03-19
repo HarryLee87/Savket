@@ -1,5 +1,5 @@
 
-import FormBtn from "@/components/FormBtn"
+import Button from "@/components/Button"
 import InputForm from "@/components/InputForm"
 
 function SMS() {
@@ -14,7 +14,7 @@ function SMS() {
                     name="phone" type="number" placeholder="Phone number" required={true} errors={[]} />
                 <InputForm
                     name="verfication_code" type="number" placeholder="Verification code" required={true} errors={[]} />
-                <FormBtn text="Send" />
+                <Button text="Send" />
             </form>
         </div>
     )

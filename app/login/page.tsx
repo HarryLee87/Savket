@@ -1,10 +1,10 @@
 "use client"
 
-import FormBtn from "@/components/FormBtn"
 import InputForm from "@/components/InputForm"
 import SMSLogin from "@/components/SMSLogin"
 import { handleForm } from "./actions"
 import { useActionState } from "react"
+import Button from "@/components/Button"
 
 function Login() {
     const [state, action] = useActionState(handleForm, null)
@@ -24,7 +24,7 @@ function Login() {
                     placeholder="Password"
                     required={true}
                     errors={state?.errors ?? []} />
-                <FormBtn text="Login" />
+                <Button text="Login" />
             </form>
             <SMSLogin />
         </div>
