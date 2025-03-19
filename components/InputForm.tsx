@@ -1,10 +1,8 @@
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline"
-import { useState } from "react"
+import { InputHTMLAttributes, useState } from "react"
 
 interface InputFormProps {
     type: string,
-    placeholder: string,
-    required: boolean,
     errors?: string[]
     name: string
     pwIcon?: boolean
@@ -12,12 +10,11 @@ interface InputFormProps {
 
 function InputForm({
     type,
-    placeholder,
-    required,
     errors = [],
     name,
-    pwIcon
-}: InputFormProps,
+    pwIcon,
+    ...rest
+}: InputFormProps & InputHTMLAttributes<HTMLInputElement>,
 ) {
     const [visible, setVisible] = useState<boolean>(false)
 
@@ -35,10 +32,9 @@ function InputForm({
                 </div>
                 <input
                     name={name}
-                    placeholder={placeholder}
                     type={visible ? "text" : type}
-                    required={required}
                     className="input-field"
+                    {...rest}
                 />
             </div>
             <div className="flex flex-col">
