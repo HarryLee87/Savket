@@ -16,6 +16,7 @@
     "@tailwindcss/postcss": "^4.0.14",
     "@types/bcrypt": "^5.0.2",
     "bcrypt": "^5.1.1",
+    "iron-session": "^8.0.4",
     "next": "15.2.3",
     "prisma": "^6.5.0",
     "react": "^19",
