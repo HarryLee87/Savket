@@ -1,22 +1,56 @@
+"use server";
+
 import { z } from "zod";
+import validator from "validator";
+import { redirect } from "next/navigation";
 
-const SMSSchema = z.object({
-  phone: z.string().min(10).max(10),
-  token: z.string().min(6).max(6),
-});
+const phoneSchema = z
+  .string()
+  .trim()
+  .refine((phone) => validator.isMobilePhone(phone, ["ko-KR", "en-CA"]));
+const tokenSchema = z.coerce.number().min(100000).max(999999);
 
-const SMSHandleForm = async (prevState: any, formData: FormData) => {
-  const data = {
-    phone: formData.get("phone"),
-    token: formData.get("token"),
-  };
+interface ActionState {
+  token: boolean;
+  phone?: string;
+}
 
-  const result = SMSSchema.safeParse(data);
-  if (!result.success) {
-    return result.error.flatten();
+const SMSHandleForm = async (prevState: ActionState, formData: FormData) => {
+  const phone = formData.get("phone") as string;
+  const token = formData.get("token");
+
+  if (!prevState.token) {
+    const result = phoneSchema.safeParse(phone);
+    if (!result.success) {
+      return {
+        token: false,
+        phone: phone,
+      };
+    } else {
+      return {
+        token: true,
+        phone: phone,
+      };
+    }
   } else {
-    console.log(result.data);
+    const result = tokenSchema.safeParse(token);
+    if (!result.success) {
+      return {
+        token: true,
+        phone: prevState.phone, // Preserve the phone number
+        // return the errors
+      };
+    } else {
+      redirect("/");
+    }
   }
+
+  //   const result = SMSSchema.safeParse(data);
+  //   if (!result.success) {
+  //     return result.error.flatten();
+  //   } else {
+  //     console.log(result.data);
+  //   }
 };
 
 export { SMSHandleForm };

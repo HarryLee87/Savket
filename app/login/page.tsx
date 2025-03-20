@@ -2,13 +2,13 @@
 
 import InputForm from "@/components/InputForm"
 import SMSLogin from "@/components/SMSLogin"
-import { useActionState } from "react"
 import Button from "@/components/Button"
 import { PASSWORD_MAX_LENGTH, PASSWORD_MIN_LENGTH, USERNAME_MAX_LENGTH, USERNAME_MIN_LENGTH } from "@/utils/constans"
 import { loginHandleForm } from "./actions"
+import { useFormState } from "react-dom"
 
 function Login() {
-    const [state, action] = useActionState(loginHandleForm, null)
+    const [state, action] = useFormState(loginHandleForm, null)
 
     return (
         <div className="flex flex-col gap-10 p-4 mx-auto max-w-sm *:font-medium">

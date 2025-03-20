@@ -2,11 +2,16 @@
 
 import Button from "@/components/Button"
 import InputForm from "@/components/InputForm"
-import { useActionState } from "react"
 import { SMSHandleForm } from "./actions"
+import { useFormState } from "react-dom"
+
+const initialState = {
+    token: false,
+    phone: "",
+}
 
 function SMS() {
-    const [state, dispatch] = useActionState(SMSHandleForm, null)
+    const [state, dispatch] = useFormState(SMSHandleForm, initialState)
 
     return (
         <div className="flex flex-col gap-10 p-4 mx-auto max-w-sm *:font-medium">
@@ -16,9 +21,22 @@ function SMS() {
             </div>
             <form action={dispatch} className="flex flex-col gap-2">
                 <InputForm
-                    name="phone" type="number" placeholder="Phone number" required={true} errors={state?.fieldErrors.phone} />
-                <InputForm
-                    name="token" type="number" placeholder="Verification code" required={true} errors={state?.fieldErrors.token} />
+                    name="phone"
+                    type="number"
+                    placeholder="Phone number"
+                    required={true}
+                    defaultValue={state.phone}
+                // errors={state?.fieldErrors.phone} 
+                />
+                {state.token ? (<InputForm
+                    name="token"
+                    type="number"
+                    placeholder="Verification code"
+                    required={true}
+                    // errors={state?.fieldErrors.token}
+                    min={100000}
+                    max={999999}
+                />) : null}
                 <Button text="Send" />
             </form>
         </div>
