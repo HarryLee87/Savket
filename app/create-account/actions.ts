@@ -1,5 +1,6 @@
 "use server";
 
+import { db } from "@/lib/prisma";
 import {
   PASSWORD_MAX_LENGTH,
   PASSWORD_MIN_LENGTH,
@@ -9,10 +10,34 @@ import {
   USERNAME_MIN_LENGTH,
 } from "@/utils/constans";
 import { PASSWORD_REGEX } from "@/utils/regexes/password";
+import { redirect } from "next/navigation";
 import { z } from "zod";
+import bcrypt from "bcrypt";
 
-const checkUsername = (username: string) => {
-  return !username.includes("silly");
+const checkUniqueUsername = async (username: string) => {
+  const user = await db.user.findUnique({
+    where: {
+      username,
+    },
+    select: {
+      id: true,
+    },
+  });
+
+  return !Boolean(user);
+};
+
+const checkUniqueEmail = async (email: string) => {
+  const userEmail = await db.user.findUnique({
+    where: {
+      email,
+    },
+    select: {
+      id: true,
+    },
+  });
+
+  return !Boolean(userEmail);
 };
 
 const checkPassword = ({
@@ -34,8 +59,13 @@ const formSchema = z
       .max(USERNAME_MAX_LENGTH, USERNAME_MAX_ERROR_MESSAGE)
       .toLowerCase()
       .trim()
-      .refine(checkUsername, "silly is not allowed"),
-    email: z.string().email().trim().toLowerCase(),
+      .refine(checkUniqueUsername, "This username is already taken!"),
+    email: z
+      .string()
+      .email()
+      .trim()
+      .toLowerCase()
+      .refine(checkUniqueEmail, "This email is already taken!"),
     password: z
       .string()
       .min(PASSWORD_MIN_LENGTH)
@@ -50,19 +80,51 @@ const formSchema = z
     message: "Passwords do not match!",
     path: ["password_confirm"],
   });
+interface ActionState {
+  username: string;
+  email: string;
+  password: string;
+  password_confirm: string;
+}
 
-export async function createAccount(prevState: any, formData: FormData) {
+export async function createAccount(
+  prevState: ActionState,
+  formData: FormData
+) {
   const data = {
-    username: formData.get("username"),
-    email: formData.get("email"),
-    password: formData.get("password"),
-    password_confirm: formData.get("password_confirm"),
+    username: formData.get("username") as string,
+    email: formData.get("email") as string,
+    password: formData.get("password") as string,
+    password_confirm: formData.get("password_confirm") as string,
   };
 
-  const result = formSchema.safeParse(data);
+  const result = await formSchema.safeParseAsync(data);
   if (!result.success) {
-    return result.error.flatten();
+    return {
+      username: data.username,
+      email: data.email,
+      password: data.password,
+      password_confirm: data.password_confirm,
+      error: result.error.flatten(),
+    };
   } else {
-    console.log(result.data);
+    //hash the password
+    const hashedPassword = await bcrypt.hash(result.data.password, 12);
+    const user = await db.user.create({
+      data: {
+        username: result.data.username,
+        email: result.data.email,
+        password: hashedPassword,
+      },
+      select: {
+        id: true,
+      },
+    });
+    console.log(user);
+
+    //save the user to db
+    //log the user in
+    //redirect to "/home"
+    // redirect("/");
   }
 }

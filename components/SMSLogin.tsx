@@ -14,11 +14,11 @@ function SMSLogin() {
                     <span><ChatBubbleLeftRightIcon className="h-6 w-6" /></span>
                     <span>Continue with SMS</span>
                 </Link>
-                <Link className="primary-btn bg-[#FBE304] flex h-10 items-center justify-center gap-3" href="/sms">
+                <Link className="primary-btn bg-[#FBE304] flex h-10 items-center justify-center gap-3" href="/kakao">
                     <span><ChatBubbleOvalLeftIcon className="h-6 w-6 text-[#181600]" /></span>
                     <span className="text-[#181600]">Continue with KAKAOTALK</span>
                 </Link>
-                <Link className="primary-btn bg-white flex h-10 items-center justify-center gap-3" href="/sms">
+                <Link className="primary-btn bg-white flex h-10 items-center justify-center gap-3" href="/google">
                     <span><Image src={GoogleLogo} className="h-6 w-6" alt="google_logo" /></span>
                     <span className="text-[#181600]">Continue with GOOGLE</span>
                 </Link>

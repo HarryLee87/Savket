@@ -8,7 +8,21 @@ import { PASSWORD_MAX_LENGTH, PASSWORD_MIN_LENGTH, USERNAME_MAX_LENGTH, USERNAME
 import { useActionState } from "react"
 
 function CreateAccount() {
-    const [state, dispatch] = useActionState(createAccount, null)
+    const [state, dispatch] = useActionState(createAccount, {
+        username: "",
+        email: "",
+        password: "",
+        password_confirm: "",
+        error: {
+            formErrors: [],
+            fieldErrors: {
+                username: [],
+                email: [],
+                password: [],
+                password_confirm: []
+            }
+        }
+    })
 
     return (
         <div className="flex flex-col gap-10 p-4 mx-auto max-w-sm *:font-medium">
@@ -22,34 +36,40 @@ function CreateAccount() {
                     type="text"
                     placeholder="Username"
                     required={true}
-                    errors={state?.fieldErrors.username}
+                    errors={state?.error.fieldErrors.username}
                     minLength={USERNAME_MIN_LENGTH}
                     maxLength={USERNAME_MAX_LENGTH}
+                    defaultValue={state?.username ?? ""}
                 />
                 <InputForm
                     name="email"
                     type="email"
                     placeholder="Email"
                     required={true}
-                    errors={state?.fieldErrors.email}
+                    errors={state?.error.fieldErrors.email}
+                    maxLength={USERNAME_MAX_LENGTH}
+                    defaultValue={state?.email ?? ""}
                 />
                 <InputForm
                     name="password"
                     type="password"
                     placeholder="Password"
                     required={true}
-                    errors={state?.fieldErrors.password}
+                    errors={state?.error.fieldErrors.password}
                     pwIcon={true}
                     minLength={PASSWORD_MIN_LENGTH}
                     maxLength={PASSWORD_MAX_LENGTH}
+                    defaultValue={state?.password ?? ""}
                 />
                 <InputForm
                     name="password_confirm"
                     type="password"
                     placeholder="Password Confirm"
                     required={true}
-                    errors={state?.fieldErrors.password_confirm}
-                    pwIcon={true} />
+                    errors={state?.error.fieldErrors.password_confirm}
+                    pwIcon={true}
+                    defaultValue={state?.password_confirm ?? ""}
+                />
                 <Button text="Create Account" />
             </form>
             <SMSLogin />
