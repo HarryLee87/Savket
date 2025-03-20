@@ -7,12 +7,17 @@ import { redirect } from "next/navigation";
 const phoneSchema = z
   .string()
   .trim()
-  .refine((phone) => validator.isMobilePhone(phone, ["ko-KR", "en-CA"]));
-const tokenSchema = z.coerce.number().min(100000).max(999999);
-
-interface ActionState {
+  .refine(
+    (phone) => validator.isMobilePhone(phone, ["ko-KR", "en-CA"]),
+    "Wrong phone number format"
+  );
+const tokenSchema = z.coerce
+  .number()
+  .min(100000, "Verification Code is too short")
+  .max(999999, "Verification Code is too long");
+export interface ActionState {
   token: boolean;
-  phone?: string;
+  phone: string;
 }
 
 const SMSHandleForm = async (prevState: ActionState, formData: FormData) => {
@@ -25,6 +30,7 @@ const SMSHandleForm = async (prevState: ActionState, formData: FormData) => {
       return {
         token: false,
         phone: phone,
+        error: result.error.flatten(),
       };
     } else {
       return {
@@ -37,20 +43,13 @@ const SMSHandleForm = async (prevState: ActionState, formData: FormData) => {
     if (!result.success) {
       return {
         token: true,
-        phone: prevState.phone, // Preserve the phone number
-        // return the errors
+        phone: phone,
+        error: result.error.flatten(),
       };
     } else {
       redirect("/");
     }
   }
-
-  //   const result = SMSSchema.safeParse(data);
-  //   if (!result.success) {
-  //     return result.error.flatten();
-  //   } else {
-  //     console.log(result.data);
-  //   }
 };
 
 export { SMSHandleForm };

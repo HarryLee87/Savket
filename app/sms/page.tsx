@@ -3,15 +3,16 @@
 import Button from "@/components/Button"
 import InputForm from "@/components/InputForm"
 import { SMSHandleForm } from "./actions"
-import { useFormState } from "react-dom"
+import { useActionState } from "react"
 
-const initialState = {
+const initailState = {
     token: false,
     phone: "",
+    error: undefined
 }
 
 function SMS() {
-    const [state, dispatch] = useFormState(SMSHandleForm, initialState)
+    const [state, dispatch] = useActionState(SMSHandleForm, initailState)
 
     return (
         <div className="flex flex-col gap-10 p-4 mx-auto max-w-sm *:font-medium">
@@ -20,24 +21,26 @@ function SMS() {
                 <span className="text-xl">Verify your phone number</span>
             </div>
             <form action={dispatch} className="flex flex-col gap-2">
-                <InputForm
-                    name="phone"
-                    type="number"
-                    placeholder="Phone number"
-                    required={true}
-                    defaultValue={state.phone}
-                // errors={state?.fieldErrors.phone} 
-                />
-                {state.token ? (<InputForm
-                    name="token"
-                    type="number"
-                    placeholder="Verification code"
-                    required={true}
-                    // errors={state?.fieldErrors.token}
-                    min={100000}
-                    max={999999}
-                />) : null}
-                <Button text="Send" />
+                {state.token ? (
+                    <InputForm
+                        name="token"
+                        type="number"
+                        placeholder="Verification code"
+                        required
+                        min={100000}
+                        max={999999}
+                        errors={state.error?.formErrors}
+                    />
+                ) : (
+                    <InputForm
+                        name="phone"
+                        type="text"
+                        placeholder="Phone number"
+                        required
+                        errors={state.error?.formErrors}
+                    />
+                )}
+                <Button text={state.token ? "Verify" : "Send Verification SMS"} />
             </form>
         </div>
     )
