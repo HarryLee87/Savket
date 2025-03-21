@@ -47,7 +47,6 @@ function CreateAccount() {
                     placeholder="Email"
                     required={true}
                     errors={state?.error.fieldErrors.email}
-                    maxLength={USERNAME_MAX_LENGTH}
                     defaultValue={state?.email ?? ""}
                 />
                 <InputForm

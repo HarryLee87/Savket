@@ -14,6 +14,7 @@ import { redirect } from "next/navigation";
 import { z } from "zod";
 import bcrypt from "bcrypt";
 import getSession from "@/lib/session";
+import { createClient } from "@/utils/supbase/server";
 
 const checkPassword = ({
   password,
@@ -70,28 +71,28 @@ const formSchema = z
       });
       return z.NEVER;
     }
-  })
-  .superRefine(async ({ email }, context) => {
-    const userEmail = await db.user.findUnique({
-      where: {
-        email,
-      },
-      select: {
-        id: true,
-      },
-    });
-
-    if (userEmail) {
-      // show error
-      context.addIssue({
-        code: "custom",
-        message: "This email is already taken!",
-        path: ["email"],
-        fatal: true,
-      });
-      return z.NEVER;
-    }
   });
+// .superRefine(async ({ email }, context) => {
+//   const userEmail = await db.user.findUnique({
+//     where: {
+//       email,
+//     },
+//     select: {
+//       id: true,
+//     },
+//   });
+
+//   if (userEmail) {
+//     // show error
+//     context.addIssue({
+//       code: "custom",
+//       message: "This email is already taken!",
+//       path: ["email"],
+//       fatal: true,
+//     });
+//     return z.NEVER;
+//   }
+// });
 
 interface ActionState {
   username: string;
@@ -104,6 +105,8 @@ export async function createAccount(
   prevState: ActionState,
   formData: FormData
 ) {
+  const supabase = await createClient();
+
   const data = {
     username: formData.get("username") as string,
     email: formData.get("email") as string,
@@ -115,26 +118,45 @@ export async function createAccount(
   if (!result.success) {
     console.log(result.error.flatten());
     return {
-      username: data.username,
-      email: data.email,
-      password: data.password,
-      password_confirm: data.password_confirm,
+      ...data,
       error: result.error.flatten(),
     };
   } else {
+    const { data: authData, error } = await supabase.auth.signUp({
+      email: result.data.email,
+      password: result.data.password,
+      options: {
+        data: { display_name: result.data.username },
+        emailRedirectTo: "/profile",
+      },
+    });
+
+    if (error) {
+      console.log("Signup error:", error.message);
+      return {
+        ...data,
+        error: {
+          formErrors: [],
+          fieldErrors: {
+            email: [error.message],
+          },
+        },
+      };
+    }
+
     //hash the password
-    const hashedPassword = await bcrypt.hash(result.data.password, 12);
+    // const hashedPassword = await bcrypt.hash(result.data.password, 12);
     const user = await db.user.create({
       data: {
         username: result.data.username,
-        email: result.data.email,
-        password: hashedPassword,
+        // email: result.data.email,
+        // password: hashedPassword,
       },
       select: {
         id: true,
       },
     });
-    console.log(user);
+    // console.log(user);
     //log the user in
     const session = await getSession();
 
