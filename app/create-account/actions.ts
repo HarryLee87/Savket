@@ -8,13 +8,13 @@ import {
   USERNAME_MAX_LENGTH,
   USERNAME_MIN_ERROR_MESSAGE,
   USERNAME_MIN_LENGTH,
-} from "@/utils/constans";
+} from "@/utils/constants";
 import { PASSWORD_REGEX } from "@/utils/regexes/password";
 import { redirect } from "next/navigation";
 import { z } from "zod";
-import bcrypt from "bcrypt";
-import getSession from "@/lib/session";
-import { createClient } from "@/utils/supbase/server";
+import { createClient } from "@/utils/supabase/server";
+// import bcrypt from "bcrypt";
+// import getSession from "@/lib/session";
 
 const checkPassword = ({
   password,
@@ -157,11 +157,11 @@ export async function createAccount(
       },
     });
     // console.log(user);
-    //log the user in
-    const session = await getSession();
+    //log the user in with iron-session to save the session in browser cookie.
+    // const session = await getSession();
 
-    session.id = user.id;
-    await session.save();
+    // session.id = user.id;
+    // await session.save();
 
     redirect("/profile");
   }
