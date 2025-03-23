@@ -20,12 +20,12 @@ export default function Home() {
         <h2 className="text-2xl">Welcome to Savket!</h2>
       </div>
       <div className="flex flex-col items-center gap-3 w-full">
-        <Link href="/create-account"
+        <Link href="/login"
           className="primary-btn py-2 text-lg"
         >Start</Link>
-        <div className="flex gap-2">
-          <span>Do you already have an account?</span>
-          <Link href="/login" className="hover:underline">Login</Link>
+        <div className="flex justify-between w-full">
+          <span>Don't you have an account?</span>
+          <Link href="/create-account" className=" over:underline">Sign up</Link>
         </div>
       </div>
     </div>
