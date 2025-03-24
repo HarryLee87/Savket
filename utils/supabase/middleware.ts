@@ -1,6 +1,6 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
-import { boolean } from "zod";
+// import { boolean } from "zod";
 
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({
@@ -50,6 +50,7 @@ export async function updateSession(request: NextRequest) {
     // "/auth": true,
     "/create-account": true,
     "/error/alert-error": true,
+    "/sms": true,
   };
 
   if (

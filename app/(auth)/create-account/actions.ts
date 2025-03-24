@@ -13,6 +13,7 @@ import { PASSWORD_REGEX } from "@/utils/regexes/password";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { createClient } from "@/utils/supabase/server";
+import { getUser } from "@/services/auth";
 // import bcrypt from "bcrypt";
 // import getSession from "@/lib/session";
 
@@ -72,6 +73,7 @@ const formSchema = z
       return z.NEVER;
     }
   });
+
 // .superRefine(async ({ email }, context) => {
 //   const userEmail = await db.user.findUnique({
 //     where: {
@@ -153,6 +155,14 @@ export async function createAccount(
       };
     }
 
+    const authUser = await getUser();
+    await db.user.create({
+      data: {
+        id: authUser.id,
+        username: result.data.username,
+        email: result.data.email,
+      },
+    });
     //hash the password
     // const hashedPassword = await bcrypt.hash(result.data.password, 12);
     // const user = await db.user.create({

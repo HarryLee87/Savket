@@ -1,28 +1,8 @@
 // import db from "@/lib/prisma";
+import { getUser } from "@/services/auth";
 import { createClient } from "@/utils/supabase/server";
 // import getSession from "@/lib/session";
 import { notFound, redirect } from "next/navigation";
-
-async function getUser() {
-    // const session = await getSession();
-    // if (session.id) {
-    //     const user = await db.user.findUnique({
-    //         where: {
-    //             id: session.id
-    //         }
-    //     });
-    //     if (user) {
-    //         return user;
-    //     }
-    // }
-    const supabase = await createClient()
-    const session = await supabase.auth.getSession()
-    if (session) {
-        return session
-    }
-
-    notFound();
-}
 
 export default async function Profile() {
     const user = await getUser();
@@ -42,7 +22,7 @@ export default async function Profile() {
     return (
         <div>
             <h1>Welcome,
-                {user?.data.session?.user.user_metadata.username}
+                {user?.user_metadata.username ?? user.user_metadata.name}
             </h1>
             <form action={logOut}>
                 <button>Logout</button>

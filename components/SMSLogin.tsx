@@ -15,10 +15,11 @@ function SMSLogin() {
                     <span><ChatBubbleLeftRightIcon className="h-6 w-6" /></span>
                     <span>Continue with SMS</span>
                 </Link>
-                <Link className="primary-btn bg-[#FBE304] flex h-10 items-center justify-center gap-3" href="/kakao">
+                {/* need to register kakao biz app with a business number in order to receive email_account */}
+                {/* <form className="primary-btn bg-[#FBE304] flex h-10 items-center justify-center gap-3" action={signWithKakao}>
                     <span><ChatBubbleOvalLeftIcon className="h-6 w-6 text-[#181600]" /></span>
-                    <span className="text-[#181600]">Continue with KAKAOTALK</span>
-                </Link>
+                    <button className="text-[#181600]">Continue with KAKAOTALK</button>
+                </form> */}
                 <form className="primary-btn bg-white flex h-10 items-center justify-center gap-3" action={signInWithGoogle}>
                     <span><Image src={GoogleLogo} className="h-6 w-6" alt="google_logo" /></span>
                     <button className="text-[#181600]">Continue with GOOGLE</button>

@@ -22,15 +22,18 @@ function SMS() {
             </div>
             <form action={dispatch} className="flex flex-col gap-2">
                 {state.token ? (
-                    <InputForm
-                        name="token"
-                        type="number"
-                        placeholder="Verification code"
-                        required
-                        min={100000}
-                        max={999999}
-                        errors={state.error?.formErrors}
-                    />
+                    <>
+                        <input type="hidden" name="phone" value={state.phone} />
+                        <InputForm
+                            name="token"
+                            type="number"
+                            placeholder="Verification code"
+                            required
+                            min={100000}
+                            max={999999}
+                            errors={state.error?.formErrors}
+                        />
+                    </>
                 ) : (
                     <InputForm
                         name="phone"
