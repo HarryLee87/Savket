@@ -126,13 +126,12 @@ export async function createAccount(
       email: result.data.email,
       password: result.data.password,
       options: {
-        data: { display_name: result.data.username },
+        data: { username: result.data.username },
         emailRedirectTo: "/profile",
       },
     });
 
     if (error) {
-      console.log("Signup error:", error.message);
       return {
         ...data,
         error: {
@@ -142,20 +141,30 @@ export async function createAccount(
           },
         },
       };
+    } else if (authData.user?.identities?.length === 0) {
+      return {
+        ...data,
+        error: {
+          formErrors: [],
+          fieldErrors: {
+            email: ["User with this email already exists, please login"],
+          },
+        },
+      };
     }
 
     //hash the password
     // const hashedPassword = await bcrypt.hash(result.data.password, 12);
-    const user = await db.user.create({
-      data: {
-        username: result.data.username,
-        // email: result.data.email,
-        // password: hashedPassword,
-      },
-      select: {
-        id: true,
-      },
-    });
+    // const user = await db.user.create({
+    //   data: {
+    //     username: result.data.username,
+    // email: result.data.email,
+    // password: hashedPassword,
+    // },
+    //   select: {
+    //     id: true,
+    //   },
+    // });
     // console.log(user);
     //log the user in with iron-session to save the session in browser cookie.
     // const session = await getSession();
@@ -163,6 +172,6 @@ export async function createAccount(
     // session.id = user.id;
     // await session.save();
 
-    redirect("/profile");
+    redirect("/error/alert-error");
   }
 }

@@ -42,7 +42,7 @@ export default async function Profile() {
     return (
         <div>
             <h1>Welcome,
-                {user?.data.session?.user.user_metadata.display_name}
+                {user?.data.session?.user.user_metadata.username}
             </h1>
             <form action={logOut}>
                 <button>Logout</button>
@@ -50,3 +50,17 @@ export default async function Profile() {
         </div>
     )
 }
+
+// export async function middleware(request: NextRequest) {
+//     const session = await getSession();
+//     const exists = publicOnlyUrls[request.nextUrl.pathname];
+//     if (!session.id) {
+//         if (!exists) {
+//             return NextResponse.redirect(new URL("/", request.url));
+//         }
+//     } else {
+//         if (exists) {
+//             return NextResponse.redirect(new URL("/products", request.url));
+//         }
+//     }
+// }

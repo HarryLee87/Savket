@@ -3,6 +3,7 @@ import { ChatBubbleLeftRightIcon, ChatBubbleOvalLeftEllipsisIcon } from "@heroic
 import Link from "next/link"
 import GoogleLogo from "@/public/google-icon-logo-svgrepo-com.svg"
 import Image from "next/image"
+import { signInWithGoogle } from "@/services/auth"
 
 
 function SMSLogin() {
@@ -18,10 +19,10 @@ function SMSLogin() {
                     <span><ChatBubbleOvalLeftIcon className="h-6 w-6 text-[#181600]" /></span>
                     <span className="text-[#181600]">Continue with KAKAOTALK</span>
                 </Link>
-                <Link className="primary-btn bg-white flex h-10 items-center justify-center gap-3" href="/google">
+                <form className="primary-btn bg-white flex h-10 items-center justify-center gap-3" action={signInWithGoogle}>
                     <span><Image src={GoogleLogo} className="h-6 w-6" alt="google_logo" /></span>
-                    <span className="text-[#181600]">Continue with GOOGLE</span>
-                </Link>
+                    <button className="text-[#181600]">Continue with GOOGLE</button>
+                </form>
             </div>
         </>
     )
