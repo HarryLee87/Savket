@@ -37,4 +37,18 @@
     /* Remove spinner arrows in Firefox */
     -moz-appearance: textfield;
   }
+
+  .tab-nav-icon {
+    @apply flex flex-col items-center gap-px;
+  }
+}
+
+.mobile-container {
+  min-height: auto;
+}
+
+@media (max-width: 96rem) {
+  .mobile-container {
+    min-height: 100dvh;
+  }
 }

@@ -21,14 +21,27 @@ model User {
   avatar String?
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
-  smsToken SMSToken[]
+  // smsToken SMSToken[]
+  Product Product[]
 }
 
-model SMSToken {
+// model SMSToken {
+//   id Int @id @default(autoincrement())
+//   token String @unique
+//   created_at DateTime @default(now())
+//   updated_at DateTime @updatedAt
+//   user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
+//   user_id String @db.Uuid
+// }
+
+model Product {
   id Int @id @default(autoincrement())
-  token String @unique
+  title String
+  price Float
+  photo String
+  description String
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
-  user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  user User @relation(fields: [user_id], references: [id])
   user_id String @db.Uuid
 }
