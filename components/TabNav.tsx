@@ -20,7 +20,7 @@ import { usePathname } from "next/navigation";
 export default function TabNav() {
     const pathname = usePathname()
     return (
-        <div className="fixed bottom-0 grid grid-cols-5 border-neutral-600 border-t py-3 -mx-2 max-w-md w-full *:text-white">
+        <div className="fixed bottom-0 grid grid-cols-5 bg-gray-900 border-neutral-600 border-t py-3 -mx-2 max-w-md w-full *:text-white ">
             <Link href="/products" className="tab-nav-icon">
                 {pathname === "/products" ?
                     <HomeIconSolid className="w-7 h-7" />
