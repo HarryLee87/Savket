@@ -20,37 +20,48 @@ import { usePathname } from "next/navigation";
 export default function TabNav() {
     const pathname = usePathname()
     return (
-        <div className="fixed bottom-0 grid grid-cols-5 bg-gray-900 border-neutral-600 border-t py-3 -mx-2 max-w-md w-full *:text-white ">
-            <Link href="/products" className="tab-nav-icon">
-                {pathname === "/products" ?
-                    <HomeIconSolid className="w-7 h-7" />
-                    : <HomeIconOutline className="w-7 h-7" />}
-                <span>Home</span>
-            </Link>
-            <Link href="/life" className="tab-nav-icon">
-                {pathname === "/life" ?
-                    <NewspaperIconSolid className="w-7 h-7" />
-                    : <NewspaperIconOutline className="w-7 h-7" />}
-                <span>Life</span>
-            </Link>
-            <Link href="/chat" className="tab-nav-icon">
-                {pathname === "/chat" ?
-                    <ChatBubbleBottomCenterTextIcon className="w-7 h-7" />
-                    : <ChatBubbleBottomCenterIcon className="w-7 h-7" />}
-                <span>Chat</span>
-            </Link>
-            <Link href="/live" className="tab-nav-icon">
-                {pathname === "/live" ?
-                    <VideoCameraIconSolid className="w-7 h-7" />
-                    : <VideoCameraIconOutline className="w-7 h-7" />}
-                <span>Live</span>
-            </Link>
-            <Link href="/profile" className="tab-nav-icon">
-                {pathname === "/profile" ?
-                    <UserIconSolid className="w-7 h-7" />
-                    : <UserIconOutline className="w-7 h-7" />}
-                <span>Profile</span>
-            </Link>
+        <div className="fixed bottom-0 grid grid-cols-5 bg-neutral-800 border-neutral-600 border-t py-3 -mx-2 max-w-md w-full">
+            {navItems.map(({ href, label, selectedIcon, unselectedIcon }) => (
+                <Link key={href} href={href} className="tab-nav-icon">
+                    {pathname === href ? selectedIcon : unselectedIcon}
+                    <span className={pathname === href ? "text-lime-500" : "text-white"}>
+                        {label}
+                    </span>
+                </Link>
+            ))}
         </div>
     )
 }
+
+const navItems = [
+    {
+        href: "/products",
+        label: "Home",
+        selectedIcon: <HomeIconSolid className="w-7 h-7" />,
+        unselectedIcon: <HomeIconOutline className="w-7 h-7 text-white" />,
+    },
+    {
+        href: "/life",
+        label: "Life",
+        selectedIcon: <NewspaperIconSolid className="w-7 h-7" />,
+        unselectedIcon: <NewspaperIconOutline className="w-7 h-7 text-white" />,
+    },
+    {
+        href: "/chat",
+        label: "Chat",
+        selectedIcon: <ChatBubbleBottomCenterTextIcon className="w-7 h-7" />,
+        unselectedIcon: <ChatBubbleBottomCenterIcon className="w-7 h-7 text-white" />,
+    },
+    {
+        href: "/live",
+        label: "Live",
+        selectedIcon: <VideoCameraIconSolid className="w-7 h-7" />,
+        unselectedIcon: <VideoCameraIconOutline className="w-7 h-7 text-white" />,
+    },
+    {
+        href: "/profile",
+        label: "Profile",
+        selectedIcon: <UserIconSolid className="w-7 h-7" />,
+        unselectedIcon: <UserIconOutline className="w-7 h-7 text-white" />,
+    },
+];
