@@ -5,6 +5,9 @@ import InputForm from "@/components/InputForm";
 import { PhotoIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
 import { uploadProduct } from "./actions";
+import Image from "next/image";
+import { MAX_CHUNK_SIZE } from "@supabase/ssr";
+import { XMarkIcon } from "@heroicons/react/20/solid";
 
 const MAX_IMAGE_QTY = 5
 
@@ -16,7 +19,7 @@ export default function NewProduct() {
         if (!files) return
         // const file = files[0]
 
-        if (files.length > 5) {
+        if (files.length > MAX_IMAGE_QTY) {
             alert("You can upload a maximum of 5 images.")
             return
         }
@@ -37,31 +40,46 @@ export default function NewProduct() {
         console.log(urls)
     }
 
+    const handleDeleteImg = (index: number) => {
+        setPreviews((prev) => prev.filter((_, i) => i !== index))
+    }
+
     return (
         <div>
             <form action={uploadProduct} className="flex flex-col gap-5 p-3">
-                <label
-                    htmlFor="photo"
-                    className="border-2 aspect-square flex flex-col items-center justify-center text-neutral-300 border-neutral-300 rounded-md border-dashed cursor-pointe bg-center bg-cover"
-                // style={{
-                //     backgroundImage: `url(${preview})`
-                // }}
-                >
+                <div className="flex flex-row gap-2 max-w-md overflow-x-auto scrollbar-hidden py-2 items-center">
+                    <label
+                        htmlFor="photo"
+                        className="border-2 aspect-square flex flex-col items-center justify-center text-neutral-300 border-neutral-300 rounded-md border-dashed cursor-pointer bg-center bg-cover w-30 h-30"
+                    >
+                        <PhotoIcon className="w-15" />
+                        <div className="*:text-sm">
+                            <span className={`text-neutral-400 ${previews.length === 0 ? "" : "text-orange-600"}`}>{previews.length}</span>
+                            <span>/{MAX_IMAGE_QTY}</span>
+                        </div>
+                    </label>
+
                     {previews.length === 0 ? (
-                        <>
-                            <PhotoIcon className="w-20" />
-                            <div className="text-neutral-400 text-sm">Add pictures</div>
-                        </>
+                        null
                     )
                         : (
-                            <div className="flex gap-2">
+                            <div className="flex gap-3">
                                 {previews.map((preview, index) => (
-                                    <img key={index} src={preview} alt={`Preview ${index}`} className="object-cover h-20 w-20" />
+                                    <div key={index} className="relative size-28">
+                                        <Image fill key={index} src={preview} alt={`Preview ${index}`}
+                                            className="rounded-md object-cover" />
+                                        <button
+                                            onClick={() => handleDeleteImg(index)}
+                                            className="absolute -top-2 -right-2 h-5 w-5 text-neutral-900 aspect-square bg-white rounded-full cursor-pointer z-10">
+                                            <XMarkIcon />
+                                        </button>
+                                    </div>
                                 ))}
                             </div>
                         )
                     }
-                </label>
+                </div>
+
                 <input
                     onChange={onImageChange}
                     type="file"
