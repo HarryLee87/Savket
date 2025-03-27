@@ -11,7 +11,7 @@ interface ProductListProps {
 
 export default function ProductList({ initialProducts }: ProductListProps) {
     const [products, setProducts] = useState(initialProducts)
-    const [isLoading, setIsLoading] = useState(false)
+    // const [isLoading, setIsLoading] = useState(false)
     const [page, setPage] = useState(0)
     const [isLastPage, setIsLastPage] = useState(false)
 
@@ -25,7 +25,7 @@ export default function ProductList({ initialProducts }: ProductListProps) {
                 const element = entries[0]
                 if (element.isIntersecting && trigger.current) {
                     observer.unobserve(trigger.current)
-                    setIsLoading(true);
+                    // setIsLoading(true);
                     const newProducts = await getMoreProducts(page + 1)
                     if (newProducts.length !== 0) {
                         setPage(prev => prev + 1)
@@ -33,9 +33,8 @@ export default function ProductList({ initialProducts }: ProductListProps) {
                     } else {
                         setIsLastPage(true)
                     }
-                    setIsLoading(false)
+                    // setIsLoading(false)
                 }
-                console.log(entries)
             }, { threshold: 0.5 })
         if (trigger.current) {
             observer.observe(trigger.current)

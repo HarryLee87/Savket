@@ -6,7 +6,7 @@ interface ListProductProps {
     title: string,
     created_at: Date,
     id: number
-    photo: string
+    photo: string[]
     price: number
 }
 
@@ -19,7 +19,7 @@ export default function ListProduct({
     return (
         <Link href={`/products/${id}`} className="flex gap-5">
             <div className="relative size-28 min-w-28 rounded-md overflow-hidden">
-                <Image priority={true} fill sizes="28" src={photo} alt={title} quality={10} className="object-cover" />
+                <Image priority={true} fill sizes="28" src={photo[0]} alt={title} quality={10} className="object-cover" />
             </div>
             <div className="flex flex-col gap-1 *:text-white">
                 <span className="text-lg">{title}</span>

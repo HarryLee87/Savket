@@ -1,3 +1,4 @@
+import ProductCarousel from "@/components/ProductCarousel"
 import db from "@/lib/prisma"
 import { formatToCAD } from "@/lib/utils"
 import { createClient } from "@/utils/supabase/server"
@@ -81,15 +82,22 @@ export default async function ProductDetail({ params }: { params: Promise<{ id: 
         })
         redirect("/products")
     }
+    if (product) {
+        const photos = product.photo!
+        console.log("🚀 ~ ProductDetail ~ photos:", photos)
+
+    }
 
     const isOwner = await getIsOwner(product.user_id)
     return (
         <div className="max-w-md min-h-screen py-3 px-2 mx-auto">
             <div className="relative aspect-square size-auto">
-                <Image fill src={product.photo} alt={product.title} priority={true} className="object-cover"
+                {/* <Image fill src={product.photo[0]} alt={product.title} priority={true} className="object-cover"
                     // If the viewport is at most 432px wide, use 100vw; otherwise, use 432px.
                     sizes="(max-width: 432px) 100vw, 432px"
-                />
+                /> */}
+                <ProductCarousel images={product.photo} alt={product.title} />
+
             </div>
             <div className="flex flex-row justify-between border-b border-neutral-600 items-center">
                 <div className="p-5 flex items-center gap-3 ">
