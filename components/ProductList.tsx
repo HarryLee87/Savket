@@ -45,25 +45,12 @@ export default function ProductList({ initialProducts }: ProductListProps) {
             observer.disconnect()
         }
     }, [page])
-    const onLoadMoreClick = async () => {
-
-    }
 
     return (
         <div className="flex flex-col gap-5 p-5">
             {products.map(product => <ListProduct key={product.id} {...product} />)}
             {!isLastPage ?
-                // <span ref={trigger}
-                //     style={{
-                //         marginTop: `${page + 1 * 10}vh`
-                //     }}
-                //     className="mb-96 secondary-btn mx-auto">
-                //     {isLoading ? "Loading..." : "Load more"}
-                // </span> 
                 <span ref={trigger}
-                    style={{
-                        marginTop: `${page + 1 * 5}vh`
-                    }}
                     className="loading mx-auto" />
                 : null}
         </div>
