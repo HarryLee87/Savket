@@ -3,16 +3,17 @@
 import Button from "@/components/Button";
 import InputForm from "@/components/InputForm";
 import { PhotoIcon } from "@heroicons/react/24/solid";
-import { useState } from "react";
+import { useActionState, useState } from "react";
 import { uploadProduct } from "./actions";
 import Image from "next/image";
-import { MAX_CHUNK_SIZE } from "@supabase/ssr";
 import { XMarkIcon } from "@heroicons/react/20/solid";
 
 const MAX_IMAGE_QTY = 5
 
 export default function NewProduct() {
     const [previews, setPreviews] = useState<string[]>([]);
+    const [state, dispatch] = useActionState(uploadProduct, { formErrors: [], fieldErrors: {} })
+
 
     const onImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { target: { files } } = event
@@ -46,7 +47,7 @@ export default function NewProduct() {
 
     return (
         <div>
-            <form action={uploadProduct} className="flex flex-col gap-5 p-3">
+            <form action={dispatch} className="flex flex-col gap-5 p-3">
                 <div className="flex flex-row gap-2 max-w-md overflow-x-auto scrollbar-hidden py-2 items-center">
                     <label
                         htmlFor="photo"
@@ -56,6 +57,9 @@ export default function NewProduct() {
                         <div className="*:text-sm">
                             <span className={`text-neutral-400 ${previews.length === 0 ? "" : "text-orange-600"}`}>{previews.length}</span>
                             <span>/{MAX_IMAGE_QTY}</span>
+                            {state?.fieldErrors?.photo && (
+                                <span className="text-red-500 text-xs">{state.fieldErrors.photo}</span>
+                            )}
                         </div>
                     </label>
 
@@ -89,9 +93,15 @@ export default function NewProduct() {
                     multiple
                     className="hidden"
                 />
-                <InputForm name="title" required placeholder="Title" type="text" />
-                <InputForm name="price" required placeholder="Price" type="text" />
-                <InputForm name="description" required placeholder="Description" type="text" />
+                <InputForm name="title"
+                    // required
+                    placeholder="Title" type="text" errors={state?.fieldErrors.title} />
+                <InputForm name="price"
+                    // required
+                    placeholder="Price" type="text" errors={state?.fieldErrors.price} />
+                <InputForm name="description"
+                    // required 
+                    placeholder="Description" type="text" errors={state?.fieldErrors.description} />
                 <Button text="Post" />
             </form>
         </div>
