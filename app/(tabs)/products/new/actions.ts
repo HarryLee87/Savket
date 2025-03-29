@@ -3,18 +3,7 @@
 import db from "@/lib/prisma";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
-import { z } from "zod";
-
-const productSchema = z.object({
-  title: z.string().nonempty("Title is required"),
-  photo: z.array(z.instanceof(File)).min(1, {
-    message: "At least one photo is required",
-  }),
-  price: z.coerce.number({
-    required_error: "Price is required",
-  }),
-  description: z.string().nonempty("Description is required"),
-});
+import productSchema from "./schema";
 
 export async function uploadProduct(_: any, formData: FormData) {
   const photos = formData.getAll("photo");
